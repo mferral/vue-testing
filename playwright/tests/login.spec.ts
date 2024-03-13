@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('First Login', async ({ page }) => {
   // await page.goto('http://localhost:5173/login');
 
   // const title = page.getByTestId('title')
@@ -25,8 +25,13 @@ test('has title', async ({ page }) => {
   await page.getByLabel('Email Address').fill('mferral@outlook.com');
   await page.getByLabel('Password').click();
   await page.getByLabel('Password').fill('supersecret');
-  await page.getByRole('button', { name: 'Sign in' }).click();
-  await page.getByRole('heading', { name: 'Hi Quasar' }).click();
+  const button = await page.getByRole('button', { name: 'Sign in' });
+  await expect(button).toHaveJSProperty('disabled', false)
+  await button.click()
+  await expect(button).toHaveJSProperty('disabled', true)
+  // await page.waitForTimeout(3000);
+  await expect(button).toHaveJSProperty('disabled', false)
+  // await page.getByRole('heading', { name: 'Hi Quasar' }).click();
 
 });
 

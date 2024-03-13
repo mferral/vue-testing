@@ -5,13 +5,14 @@
 version: "3"
 services:
   strapi:
-    image: naskio/strapi
+    # image: naskio/strapi:latest
+    image: naskio/strapi:4.14.4
     platform: linux/amd64
     restart: always
     ports:
       - "1337:1337"
     volumes:
-      - ./app:/srv/app 
+      - ./app:/srv/app
     environment:
       NODE_ENV: development
       DATABASE_CLIENT: postgres
@@ -20,6 +21,9 @@ services:
       DATABASE_NAME: postgres
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
+      JWT_SECRET: supersecret
+    depends_on:
+      - postgres
   postgres:
     restart: always
     image: postgres:15-alpine
@@ -30,3 +34,5 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
