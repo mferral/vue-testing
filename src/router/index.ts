@@ -1,4 +1,3 @@
-// Composables
 import { createRouter, createWebHistory } from "vue-router";
 
 function guardMyroute(to: any, from: any, next: any) {
@@ -22,13 +21,12 @@ const routes = [
   {
     path: "/",
     component: () => import("@/layout/quasar-classic.vue"),
-    beforeEnter: guardMyroute,
+    // beforeEnter: guardMyroute,
     children: [
       {
         path: "",
         name: "Home",
-        component: () =>
-          import(/* webpackChunkName: "home" */ "@/Home.vue"),
+        component: () => import("@/Home.vue"),
       },
       {
         path: "/posts",
@@ -38,8 +36,7 @@ const routes = [
       {
         path: "/dashboard",
         name: "Dashboard",
-        component: () =>
-          import(/* webpackChunkName: "dashboard" */ "@/Home.vue"),
+        component: () => import("@/Home.vue"),
       },
     ],
   },
