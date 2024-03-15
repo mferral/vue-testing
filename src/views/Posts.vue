@@ -1,6 +1,7 @@
 <template>
     <div class="q-pa-md">
-        <q-table title="Post List" dense separator="cell" :rows="rows" :columns="columns" row-key="name">
+        <q-table title="Post List" dense separator="cell" :rows="posts.rows" :columns="columns" row-key="name"
+            data-testid="table-posts" :loading="posts.loading">
             <template v-slot:body="props">
                 <q-tr :props="props">
                     <q-td key="name" :props="props">
@@ -12,24 +13,16 @@
                         <!-- </q-badge> -->
                     </q-td>
                     <q-td key="fat" :props="props">
-                        <q-badge color="purple">
-                            {{ props.row.fat }}
-                        </q-badge>
+                        {{ props.row.fat }}
                     </q-td>
                     <q-td key="carbs" :props="props">
-                        <q-badge color="orange">
-                            {{ props.row.carbs }}
-                        </q-badge>
+                        {{ props.row.carbs }}
                     </q-td>
                     <q-td key="protein" :props="props">
-                        <q-badge color="primary">
-                            {{ props.row.protein }}
-                        </q-badge>
+                        {{ props.row.protein }}
                     </q-td>
                     <q-td key="sodium" :props="props">
-                        <q-badge color="teal">
-                            {{ props.row.sodium }}
-                        </q-badge>
+                        {{ props.row.sodium }}
                     </q-td>
                     <q-td key="calcium" :props="props">
                         <q-badge color="accent">
@@ -37,14 +30,20 @@
                         </q-badge>
                     </q-td>
                     <q-td key="iron" :props="props">
-                        <q-badge color="amber">
-                            {{ props.row.iron }}
-                        </q-badge>
+                        {{ props.row.iron }}
                     </q-td>
                     <q-td key="actions" :props="props">
                         <q-btn flat round color="primary" size="sm" icon="edit"></q-btn>
                     </q-td>
                 </q-tr>
+            </template>
+            <template v-slot:no-data="{ icon, message }">
+                <div class="full-width row flex-center text-primary q-gutter-sm">
+                    <span>
+                        Sin datos
+                    </span>
+                    <q-icon size="2em" :name="icon" />
+                </div>
             </template>
         </q-table>
     </div>
@@ -52,127 +51,31 @@
 
 <script lang="ts" setup>
 import { QTableProps } from 'quasar';
+import { postsStore } from "@/store/posts";
+import { onMounted } from 'vue'
 
+onMounted(() => {
+    posts.getPosts()
+})
+
+const posts = postsStore();
 const columns: QTableProps['columns'] = [
     {
         name: 'name',
         required: true,
-        label: 'Dessert (100g serving)',
+        label: 'Dessert',
         align: 'left',
         field: (row: any): any => row.name,
         format: (val: any): any => `${val}`,
         sortable: true
     },
     { name: 'calories', label: 'Calories', field: 'calories', sortable: true, align: 'center' },
-    { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-    { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-    { name: 'protein', label: 'Protein (g)', field: 'protein' },
-    { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-    { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a: any, b: any) => parseInt(a, 10) - parseInt(b, 10) },
-    { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a: any, b: any) => parseInt(a, 10) - parseInt(b, 10) },
+    { name: 'fat', label: 'Fat', field: 'fat', sortable: true },
+    { name: 'carbs', label: 'Carbs', field: 'carbs' },
+    { name: 'protein', label: 'Protein', field: 'protein' },
+    { name: 'sodium', label: 'Sodium', field: 'sodium' },
+    { name: 'calcium', label: 'Calcium', field: 'calcium', sortable: true, sort: (a: any, b: any) => parseInt(a, 10) - parseInt(b, 10) },
+    { name: 'iron', label: 'Iron', field: 'iron', sortable: true, sort: (a: any, b: any) => parseInt(a, 10) - parseInt(b, 10) },
     { name: 'actions', label: 'Actions', field: 'actions', align: 'center' }
-]
-
-const rows = [
-    {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        sodium: 87,
-        calcium: '14%',
-        iron: '1%'
-    },
-    {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        sodium: 129,
-        calcium: '8%',
-        iron: '1%'
-    },
-    {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        sodium: 337,
-        calcium: '6%',
-        iron: '7%'
-    },
-    {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        sodium: 413,
-        calcium: '3%',
-        iron: '8%'
-    },
-    {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        sodium: 327,
-        calcium: '7%',
-        iron: '16%'
-    },
-    {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        sodium: 50,
-        calcium: '0%',
-        iron: '0%'
-    },
-    {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        sodium: 38,
-        calcium: '0%',
-        iron: '2%'
-    },
-    {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        sodium: 562,
-        calcium: '0%',
-        iron: '45%'
-    },
-    {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        sodium: 326,
-        calcium: '2%',
-        iron: '22%'
-    },
-    {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        sodium: 54,
-        calcium: '12%',
-        iron: '6%'
-    }
 ]
 </script>
