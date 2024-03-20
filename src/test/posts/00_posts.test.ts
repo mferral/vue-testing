@@ -1,10 +1,11 @@
 // pnpm run test run posts/00_posts
-import { fireEvent, render, screen, within } from '@testing-library/vue'
+import { fireEvent, render, screen, within, waitFor } from '@testing-library/vue'
 import Posts from '@/views/Posts.vue'
 import { Quasar } from 'quasar'
 import { createTestingPinia } from '@pinia/testing'
 import { updateStore } from '@/test/store'
 import { postsStore } from '@/store/posts'
+import { postsRows } from '../moks'
 
 const obj = {
     name: 'Frozen Yogurt',
@@ -79,6 +80,39 @@ describe('My posts', () => {
         expect(within(table).queryByRole('progressbar')).toBeNull
         // Get rows and cols
         const rows = within(table).getAllByRole('row')
+        const cols = within(rows[1]).getAllByRole('cell')
+        const values = Object.values(obj)
+        // exists data in table 
+        expect(rows.length).toBeGreaterThan(0)
+        // check row values
+        values.forEach((val, i) => expect(cols[i].textContent).contain(val))
+
+    })
+    it('Should have been a searching table result', async () => {
+        render(Posts, {
+            global: {
+                plugins: [Quasar, createTestingPinia()],
+            },
+        })
+        const store = postsStore()
+        const table = screen.getByTestId("table-posts")
+        // Load data        
+        await updateStore(store, { rows: postsRows })
+
+        const rows = within(table).getAllByRole('row')
+        console.log(rows.length)
+
+        // Search         
+        vi.useFakeTimers()
+        const input_search = screen.getByTestId("input-search")
+        await fireEvent.update(input_search, 'fr')
+        vi.runOnlyPendingTimers()
+        await waitFor(async () => {
+            within(table).getAllByRole('row')
+        });
+        screen.debug(screen.getByRole("log"))
+        console.log(within(table).getAllByRole('row').length);
+        // Get rows and cols        
         const cols = within(rows[1]).getAllByRole('cell')
         const values = Object.values(obj)
         // exists data in table 
