@@ -24,18 +24,18 @@
                 <div class="col-9 q-gutter-md">
                     <div class="row">
                         <q-input outlined v-model="text" label="Text" dense class="col-3" hint="Field is required"
-                            :rules="[val => !!val || 'Field is required']" />
+                            :rules="[(val: any) => !!val || 'Field is required']" />
                     </div>
                     <div class="row">
                         <div class="col-3">
                             <div class="text-caption">Input text.</div>
                             <q-input outlined v-model="text" label="Text" dense hint="Field is required"
-                                :rules="[val => !!val || 'Field is required']" />
+                                :rules="[(val: any) => !!val || 'Field is required']" />
                         </div>
                     </div>
                     <div class="row">
                         <q-input outlined v-model="text" type="password" label="Password" dense class="col-3"
-                            hint="Field is required" :rules="[val => !!val || 'Field is required']" />
+                            hint="Field is required" :rules="[(val: any) => !!val || 'Field is required']" />
                     </div>
                 </div>
             </q-card-section>
@@ -45,7 +45,7 @@
                 <div class="col-9 q-gutter-md">
                     <div class="row">
                         <q-select outlined v-model="select" :options="options" label="Outlined" dense class="col-4"
-                            :rules="[select => !!select || 'Field is required']" />
+                            :rules="[(select: any) => !!select || 'Field is required']" />
                     </div>
                 </div>
             </q-card-section>
@@ -55,7 +55,7 @@
                 <div class="col-9 q-gutter-md">
                     <div class="row">
                         <q-field hide-bottom-space borderless class="q-pa-none" v-model="toggle"
-                            :rules="[toggle => !!toggle || 'Field is required']">
+                            :rules="[(toggle: any) => !!toggle || 'Field is required']">
                             <q-toggle v-model="toggle" label="Agreed" class="col-4" />
                         </q-field>
                     </div>
@@ -155,4 +155,4 @@ const options_group = [
 //     image.value = null
 //     imageUrl.value = 'https://cdn.quasar.dev/logo-v2/svg/logo.svg'
 // }
-</script>
+</script>(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)
