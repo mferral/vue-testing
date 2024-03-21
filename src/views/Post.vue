@@ -22,7 +22,7 @@
             <q-card-section class="row">
                 <div class="col-3 text-weight-medium">Input Textfields</div>
                 <div class="col-9 q-gutter-md">
-                    <div class="row">
+                    <div class="row" data-testid="row-text-1">
                         <q-input outlined v-model="text" label="Text" dense class="col-3" hint="Field is required"
                             :rules="[(val: any) => !!val || 'Field is required']" />
                     </div>
@@ -54,15 +54,18 @@
                 <div class="col-3 text-weight-medium">Toggles</div>
                 <div class="col-9 q-gutter-md">
                     <div class="row">
-                        <q-field hide-bottom-space borderless class="q-pa-none" v-model="toggle"
-                            :rules="[(toggle: any) => !!toggle || 'Field is required']">
-                            <q-toggle v-model="toggle" label="Agreed" class="col-4" />
-                        </q-field>
-                    </div>
-
-                    <div class="row">
                         <div class="col-4">
                             <div class="row">
+                                <q-field hide-bottom-space borderless dense class="q-pa-none" v-model="toggle"
+                                    color="dark" :rules="[(toggle: any) => !!toggle || 'Field is required ']">
+                                    <q-toggle v-model="toggle" label="Agreed" />
+                                </q-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="row" data-testid="group-toggles">
                                 <div class="text-caption col-12">
                                     Select a least one option.
                                 </div>
@@ -82,11 +85,11 @@
                 <div class="col-3 text-weight-medium">Datepickers</div>
                 <div class="col-9 q-gutter-md">
                     <div class="row">
-                        <q-input outlined dense readonly v-model="date">
+                        <q-input outlined dense v-model="date">
                             <template v-slot:append>
                                 <q-icon name="event" class="cursor-pointer">
                                     <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                                        <q-date v-model="date" mask="YYYY-MM-DD">
+                                        <q-date v-model="date" mask="DD-MM-YYYY">
                                             <div class="row items-center justify-end">
                                                 <q-btn v-close-popup label="Close" color="primary" flat />
                                             </div>
@@ -113,7 +116,7 @@ import ProfilePhoto from '@/components/ProfilePhoto.vue';
 const text = ref('')
 const image = ref<any>(null)
 const toggle = ref(false)
-const date = ref('2019-02-01')
+const date = ref('01-01-2024')
 const select = ref(null)
 const options = [
     'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
@@ -133,26 +136,5 @@ const options_group = [
         value: 'op3'
     }
 ]
-// const image = ref<any>(null);
-// const imageUrl = ref('https://cdn.quasar.dev/logo-v2/svg/logo.svg');
-// const file = ref<any>(null)
 
-
-// const handleUploadBtnClick = () => {
-//     file.value.pickFiles()
-// }
-
-// const handleUpload = (img: any) => {
-//     console.log('handleUpload is triggered');
-//     image.value = img
-//     console.log(image.value.name);
-
-//     if (img) {
-//         imageUrl.value = URL.createObjectURL(img)
-//     }
-// }
-// const handleRemove = () => {
-//     image.value = null
-//     imageUrl.value = 'https://cdn.quasar.dev/logo-v2/svg/logo.svg'
-// }
-</script>(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)(: any)
+</script>
